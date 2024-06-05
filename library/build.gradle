@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.github.jitpack'
+group = 'com.hdcicd-lab.sdks'
 version = '1.0'
 
 android {
@@ -42,9 +42,20 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.jitpack'
+                groupId = 'com.hdcicd-lab.sdks'
                 artifactId = 'android-example'
                 version = '1.0'
+            }
+        }
+
+        repositories {
+            maven {
+                name 'labrepo'
+                url 'https://entee28-975049978258.d.codeartifact.ap-southeast-1.amazonaws.com/maven/hdcicd-lab/'
+                credentials {
+                    username "aws"
+                    password System.env.CODEARTIFACT_AUTH_TOKEN
+                }
             }
         }
     }

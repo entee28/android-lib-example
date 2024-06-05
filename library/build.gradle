@@ -17,15 +17,62 @@ android {
         versionName "1.0"
     }
 
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            dimension "environment"
+            versionNameSuffix "-dev"
+        }
+        uat {
+            dimension "environment"
+            versionNameSuffix "-uat"
+        }
+        prod {
+            dimension "environment"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            versionNameSuffix "-debug"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+}
+
+def getCommitHash() {
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    } catch (Exception e) {
+        println "Failed to get commit hash: ${e.message}"
+        return "unknown"
+    }
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def flavorName = variant.flavorName
+        def buildType = variant.buildType.name
+        if (flavorName != "prod") {
+            output.versionNameOverride = "${variant.versionName}-${getCommitHash()}"
+        } else {
+            output.versionNameOverride = variant.versionName
+        }
     }
 }
 

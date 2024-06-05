@@ -21,11 +21,11 @@ android {
     productFlavors {
         dev {
             dimension "environment"
-            versionNameSuffix "-dev"
+            versionNameSuffix "-dev-${getCommitHash()}"
         }
         uat {
             dimension "environment"
-            versionNameSuffix "-uat"
+            versionNameSuffix "-uat-${getCommitHash()}"
         }
         prod {
             dimension "environment"
@@ -61,18 +61,6 @@ def getCommitHash() {
     } catch (Exception e) {
         println "Failed to get commit hash: ${e.message}"
         return "unknown"
-    }
-}
-
-android.libraryVariants.all { variant ->
-    variant.outputs.each { output ->
-        def flavorName = variant.flavorName
-        def buildType = variant.buildType.name
-        if (flavorName != "prod") {
-            output.versionNameOverride = "${variant.versionName}-${getCommitHash()}"
-        } else {
-            output.versionNameOverride = variant.versionName
-        }
     }
 }
 

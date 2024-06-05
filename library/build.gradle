@@ -81,14 +81,14 @@ afterEvaluate {
 
             uatRelease(MavenPublication) {
                 from components.uatRelease
-                groupId = 'com.hdcicd-lab.sdks.uat'
+                groupId = 'com.hdcicd-lab.sdks'
                 artifactId = 'android-example'
                 version = "1.0.0-uat-${getCommitHash()}"
             }
 
             devDebug(MavenPublication) {
                 from components.devDebug
-                groupId = 'com.hdcicd-lab.sdks.dev'
+                groupId = 'com.hdcicd-lab.sdks'
                 artifactId = 'android-example'
                 version = "1.0.0-dev-${getCommitHash()}"
             }

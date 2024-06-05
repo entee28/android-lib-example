@@ -64,7 +64,7 @@ def getCommitHash() {
     }
 }
 
-android.applicationVariants.all { variant ->
+android.libraryVariants.all { variant ->
     variant.outputs.each { output ->
         def flavorName = variant.flavorName
         def buildType = variant.buildType.name
@@ -87,11 +87,25 @@ afterEvaluate {
     publishing {
         publications {
             // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.release
+            prodRelease(MavenPublication) {
+                from components.prodRelease
                 groupId = 'com.hdcicd-lab.sdks'
                 artifactId = 'android-example'
-                version = '1.0'
+                version = '1.0.0'
+            }
+
+            uatRelease(MavenPublication) {
+                from components.uatRelease
+                groupId = 'com.hdcicd-lab.sdks.uat'
+                artifactId = 'android-example'
+                version = '1.0.0'
+            }
+
+            devDebug(MavenPublication) {
+                from components.release
+                groupId = 'com.hdcicd-lab.sdks.dev'
+                artifactId = 'android-example'
+                version = '1.0.0'
             }
         }
 

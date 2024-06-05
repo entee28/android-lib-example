@@ -21,11 +21,9 @@ android {
     productFlavors {
         dev {
             dimension "environment"
-            versionNameSuffix "-dev-${getCommitHash()}"
         }
         uat {
             dimension "environment"
-            versionNameSuffix "-uat-${getCommitHash()}"
         }
         prod {
             dimension "environment"
@@ -40,7 +38,6 @@ android {
 
         debug {
             minifyEnabled false
-            versionNameSuffix "-debug"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -86,14 +83,14 @@ afterEvaluate {
                 from components.uatRelease
                 groupId = 'com.hdcicd-lab.sdks.uat'
                 artifactId = 'android-example'
-                version = '1.0.0'
+                version = '1.0.0-uat-${getCommitHash()}'
             }
 
             devDebug(MavenPublication) {
                 from components.devDebug
                 groupId = 'com.hdcicd-lab.sdks.dev'
                 artifactId = 'android-example'
-                version = '1.0.0'
+                version = '1.0.0-dev-${getCommitHash()}'
             }
         }
 

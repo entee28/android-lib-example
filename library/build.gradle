@@ -62,9 +62,6 @@ def getCommitHash() {
     }
 }
 
-def signingKeyId = findProperty("signingKeyId")
-println("signingKeyId: ${signingKeyId}")
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -112,8 +109,9 @@ afterEvaluate {
 }
 
 signing {
+//    def signingKeyId = findProperty("signingKeyId")
     def signingKey = findProperty("signingKey")
     def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications
 }

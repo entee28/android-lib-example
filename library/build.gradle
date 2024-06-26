@@ -8,9 +8,6 @@ plugins {
 group = 'com.hdcicd-lab.sdks'
 version = '1.0'
 
-def signingKey = findProperty("signingKey")
-println("signingKey: ${signingKey}")
-
 android {
     compileSdkVersion 31
 

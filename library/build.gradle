@@ -107,14 +107,3 @@ afterEvaluate {
         }
     }
 }
-
-ext["signing.keyId"] = findProperty("signingKey")
-ext["signing.password"] = findProperty("signingPassword")
-ext["signing.secretKeyRingFile"] = System.getenv('KEYRING_FILE')
-
-signing {
-//    def signingKey = findProperty("signingKey")
-//    def signingPassword = findProperty("signingPassword")
-//    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications
-}
